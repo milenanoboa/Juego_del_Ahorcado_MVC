@@ -57,3 +57,55 @@ class HangmanModel:
         
         # Agregar la letra a la lista de letras usadas
         self.letras_usadas.append(letra)
+        
+        # LÓGICA PRINCIPAL: Verificar si la letra está en la palabra secreta
+        if letra in self.palabra_secreta:
+            # La letra es CORRECTA - Actualizar el progreso de la palabra
+            
+            # Convertir el progreso actual a lista para modificación
+            nueva_progreso = list(self.palabra_progreso)
+            
+            # ESTRUCTURA REPETITIVA (for): Recorrer cada posición de la palabra
+            # enumerate() nos da tanto el índice (i) como el carácter (char)
+            for i, char in enumerate(self.palabra_secreta):
+                # Si el carácter coincide con la letra ingresada
+                if char == letra:
+                    # Reemplazar el guión por la letra en esa posición
+                    nueva_progreso[i] = letra
+            
+            # Convertir la lista de vuelta a string
+            self.palabra_progreso = "".join(nueva_progreso)
+            return True, "¡Correcto!"
+        else:
+            # La letra es INCORRECTA
+            # Agregar a la lista de fallos y restar una vida
+            self.letras_fallidas.append(letra)
+            self.vidas -= 1
+            return False, "Letra incorrecta"
+    
+    def esta_ganada(self):
+        """Verifica si el jugador ganó"""
+        return "-" not in self.palabra_progreso
+    
+    def esta_perdida(self):
+        """Verifica si el jugador perdió"""
+        return self.vidas <= 0
+    
+    def calcular_puntuacion(self):
+        """Calcula la puntuación basada en vidas restantes y longitud de palabra"""
+        if self.esta_ganada():
+            self.puntuacion = self.vidas * len(self.palabra_secreta) * 10
+            return self.puntuacion
+        return 0
+    
+    def obtener_estado(self):
+        """Retorna el estado actual del juego"""
+        return {
+            'progreso': self.palabra_progreso,
+            'vidas': self.vidas,
+            'letras_fallidas': self.letras_fallidas,
+            'letras_usadas': self.letras_usadas,
+            'ganada': self.esta_ganada(),
+            'perdida': self.esta_perdida(),
+            'palabra_secreta': self.palabra_secreta
+        }
