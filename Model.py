@@ -62,7 +62,7 @@ class HangmanModel:
         if letra in self.palabra_secreta:
             # La letra es CORRECTA - Actualizar el progreso de la palabra
             
-            # Convertir el progreso actual a lista para modificación
+            # Convertir el progreso actual a una lista para modificación
             nueva_progreso = list(self.palabra_progreso)
             
             # ESTRUCTURA REPETITIVA (for): Recorrer cada posición de la palabra
