@@ -62,19 +62,13 @@ class HangmanModel:
         if letra in self.palabra_secreta:
             # La letra es CORRECTA - Actualizar el progreso de la palabra
             
-            # Convertir el progreso actual a una lista para modificación
-            nueva_progreso = list(self.palabra_progreso)
-            
-            # ESTRUCTURA REPETITIVA (for): Recorrer cada posición de la palabra
-            # enumerate() nos da tanto el índice (i) como el carácter (char)
-            for i, char in enumerate(self.palabra_secreta):
-                # Si el carácter coincide con la letra ingresada
-                if char == letra:
-                    # Reemplazar el guión por la letra en esa posición
-                    nueva_progreso[i] = letra
-            
-            # Convertir la lista de vuelta a string
-            self.palabra_progreso = "".join(nueva_progreso)
+            #PROGRAMACION FUNCIONAL AGREGADA: se utiliza map() transforma cada par (caracter_secreto, progreso_actual)
+            #Si el caracter coincide con la letra, lo revela; si no, conserva el estado actual.
+            # Esto reemplazaria el bucle FOR anterio por una funcion pura.
+            self.palabra_progreso= "".join(
+                map(lambda par: par[0] if par[0] == letra else par[1],
+                    zip(self.palabra_secreta, self.palabra_progreso))
+            )
             return True, "¡Correcto!"
         else:
             # La letra es INCORRECTA
@@ -92,9 +86,14 @@ class HangmanModel:
         return self.vidas <= 0
     
     def calcular_puntuacion(self):
-        """Calcula la puntuación basada en vidas restantes y longitud de palabra"""
+        """Calcula la puntuación basada en vidas restantes y longitud de palabra
+        PROGRAMACIÓN FUNCIONAL: filter() extrae solo las letras usadas que
+        están en la palabra secreta, es decir las letras correctas acertadas.
+        Es una función que no modifica el estado, solo calcula y retorna un valor.
+        """
         if self.esta_ganada():
-            self.puntuacion = self.vidas * len(self.palabra_secreta) * 10
+            letras_correctas = list(filter(lambda l: l in self.palabr_secreta, self.letras_usadas))
+            self.puntuacion = self.vidas * len(letras_correctas) * 10
             return self.puntuacion
         return 0
     

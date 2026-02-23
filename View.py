@@ -99,13 +99,17 @@ class HangmanView:
         print("="*40)
         print(self.dibujos[estado['vidas']])
         print("\n" + "-"*40)
+        #PROGRAMACION FUNCIONAL AGREGADA: se utiliza map()  que converte cada letra a mayúsula y 
+        # sorted() que las ordena alfabéticamente - ambas sin modificar la lista original
+        letras_usadas_ftm = ','.join(map(str.upper, sorted(estado['letras_usadas'])))
+        letras_fallidas_fmt = ' '.join(map(str.upper, sorted(estado['letras_fallidas']) ))
         print(f"💔 Vidas: {estado['vidas']}")
-        print(f"📝 Usadas: {', '.join(sorted(estado['letras_usadas']))}")
+        print(f"📝 Usadas: {letras_usadas_ftm}")
         print(f"\n🔤 Progreso: {' '.join(estado['progreso'])}")
         
         # Mostrar letras erróneas debajo de la palabra
         if estado['letras_fallidas']:
-            print(f"❌ Erróneas: {' '.join(sorted(estado['letras_fallidas']))}")
+            print(f"❌ Erróneas: {letras_fallidas_fmt}")
         else:
             print("❌ Erróneas: (ninguna)")
         
