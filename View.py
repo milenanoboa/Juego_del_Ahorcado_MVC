@@ -78,9 +78,9 @@ class HangmanView:
         Limpia la pantalla de la consola.
         """
         # Secuencia ANSI: mueve el cursor al inicio y borra toda la pantalla
-       
+        
         print("\033[H\033[J", end="")
-    
+
     def mostrar_menu(self):
         """Muestra el menú principal"""
         self.limpiar_pantalla()
@@ -93,6 +93,7 @@ class HangmanView:
     
     def mostrar_juego(self, estado):
         """Muestra el estado actual del juego"""
+
         self.limpiar_pantalla()
         print("\n" + "="*40)
         print("       🎯 A H O R C A D O")

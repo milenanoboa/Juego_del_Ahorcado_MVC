@@ -92,7 +92,7 @@ class HangmanModel:
         Es una función que no modifica el estado, solo calcula y retorna un valor.
         """
         if self.esta_ganada():
-            letras_correctas = list(filter(lambda l: l in self.palabr_secreta, self.letras_usadas))
+            letras_correctas = list(filter(lambda l: l in self.palabra_secreta, self.letras_usadas))
             self.puntuacion = self.vidas * len(letras_correctas) * 10
             return self.puntuacion
         return 0
