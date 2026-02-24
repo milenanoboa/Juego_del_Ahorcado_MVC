@@ -80,6 +80,7 @@ class HangmanView:
         # Secuencia ANSI: mueve el cursor al inicio y borra toda la pantalla
         
         print("\033[H\033[J", end="")
+        
 
     def mostrar_menu(self):
         """Muestra el menú principal"""
